@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "897804053849",
+    "project_id": "walkabout-7a44b",
+    "storage_bucket": "walkabout-7a44b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897804053849:android:a99af9996edb850394b048",
+        "android_client_info": {
+          "package_name": "com.example.walkAbout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897804053849-5ql3qmas0krv1uouaifninth7pj5h2fm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.walkAbout",
+            "certificate_hash": "f3c0b0faf484336025d9994620c24fa56f7823c7"
+          }
+        },
+        {
+          "client_id": "897804053849-d0glc941jk7ibh0km7dshe2ukaj39qp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1vLASN0p2uHYZquAnHNNFXXf0KLGMtaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897804053849-d0glc941jk7ibh0km7dshe2ukaj39qp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
