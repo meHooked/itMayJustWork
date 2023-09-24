@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etDailyGoalSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter daily goal"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sample_logview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etDailyGoalSteps" />
+
+    <Button
+        android:id="@+id/bCheckDailySteps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Daily steps"
+        app:layout_constraintEnd_toStartOf="@+id/bSaveDailyGoal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sample_logview" />
+
+    <Button
+        android:id="@+id/bSaveDailyGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save goal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bCheckDailySteps"
+        app:layout_constraintTop_toBottomOf="@id/sample_logview" />
+
+    <TextView
+        android:id="@+id/tvSavedGoalSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bCheckDailySteps"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

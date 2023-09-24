@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/etMonthlyGoalSteps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter monthly goal"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sample_logview3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etMonthlyGoalSteps" />
+
+    <Button
+        android:id="@+id/bCheckMonthlySteps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monthly steps"
+        app:layout_constraintEnd_toStartOf="@+id/bSaveMonthlyGoal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sample_logview3" />
+
+    <Button
+        android:id="@+id/bSaveMonthlyGoal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save goal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/bCheckMonthlySteps"
+        app:layout_constraintTop_toBottomOf="@id/sample_logview3" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

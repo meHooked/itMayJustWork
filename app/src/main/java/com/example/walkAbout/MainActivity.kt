@@ -22,6 +22,7 @@ import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.data.Field
 import com.google.android.material.snackbar.Snackbar
 
+
 const val TAG = "StepCounter"
 
 /**
@@ -43,12 +44,14 @@ enum class FitActionRequestCode {
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var dailySteps: TextView
-    private lateinit var bCheckDailySteps: Button
+
+    private lateinit var bDailySteps: Button
+    private lateinit var bWeeklySteps: Button
+    private lateinit var bMonthlySteps: Button
+    private lateinit var sl : TextView
 
     private val fitnessOptions = FitnessOptions.builder()
         .addDataType(DataType.AGGREGATE_STEP_COUNT_DELTA)
-        // .addDataType(Element.DataType.TYPE_STEP_COUNT_DELTA)
         .build()
 
     private val runningQOrLater =
@@ -58,17 +61,76 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        dailySteps = findViewById(R.id.sample_logview)
-        bCheckDailySteps = findViewById(R.id.bCheckDailySteps)
+
+        bDailySteps = findViewById(R.id.bDailySteps)
+        bWeeklySteps = findViewById(R.id.bWeeklySteps)
+        bMonthlySteps = findViewById(R.id.bMonthlySteps)
+        sl = findViewById(R.id.sl)
+
 
         checkPermissionsAndRun(FitActionRequestCode.SUBSCRIBE)
 
-        setupListeners()
+
+        sl.text = readData().toString()
+        bDailySteps.setOnClickListener {
+
+            supportFragmentManager.beginTransaction().apply {
+                val dailyFragment = DailyFragment()
+                val mBundle = Bundle()
+                //val stepsD = readData()
+               // Log.i(TAG, "stepsD: $stepsD")
+
+                mBundle.putString("mText", sl.text.toString())
+                dailyFragment.arguments = mBundle
+                replace(R.id.stepsHistory, dailyFragment)
+
+                commit()
+               // Log.i(TAG, "steps: $stepsD")
+
+            }
+        }
+
+        bWeeklySteps.setOnClickListener {
+
+            supportFragmentManager.beginTransaction().apply {
+                val weeklyFragment = WeeklyFragment()
+                val mBundle = Bundle()
+                val stepsD = readData().toString()
+                mBundle.putString("mText", stepsD)
+               weeklyFragment.arguments = mBundle
+                replace(R.id.stepsHistory, weeklyFragment)
+                commit()
+               // Log.i(TAG, "steps: $stepsD")
+            }
+        }
+
+        bMonthlySteps.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                val monthlyFragment = MonthlyFragment()
+                val mBundle = Bundle()
+                val stepsD = readData().toString()
+                mBundle.putString("mText", stepsD)
+                monthlyFragment.arguments = mBundle
+                replace(R.id.stepsHistory, monthlyFragment)
+                commit()
+              //  Log.i(TAG, "steps: $stepsD")
+
+            }
+        }
+
+        // setupListeners()
     }
 
-    private fun setupListeners() {
-       bCheckDailySteps.setOnClickListener { readData() }
-    }
+    /* private fun setupListeners() {
+        //bCheckDailySteps.setOnClickListener { readData() }
+        bDailySteps.setOnClickListener {
+            supportFragmentManager.beginTransaction().apply {
+                val dailyFragment = DailyFragment()
+                replace(R.id.stepsHistory, dailyFragment)
+                commit()
+            }
+        }
+     }*/
 
     private fun checkPermissionsAndRun(fitActionRequestCode: FitActionRequestCode) {
         if (permissionApproved()) {
@@ -164,11 +226,10 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    /**
-     * Reads the current daily step total, computed from midnight of the current day on the device's
-     * current timezone.
-     */
-    private fun readData() {
+    /* Reads the current daily step total, computed from midnight of the current day on the device's
+      current timezone.*/
+    private fun readData(): Int {
+        var totalD: Int = 0
         Fitness.getHistoryClient(this, getGoogleAccount())
             .readDailyTotal(DataType.TYPE_STEP_COUNT_DELTA)
             .addOnSuccessListener { dataSet ->
@@ -177,46 +238,17 @@ class MainActivity : AppCompatActivity() {
                     else -> dataSet.dataPoints.first().getValue(Field.FIELD_STEPS).asInt()
                 }
                 Log.i(TAG, "Total steps: $total")
-                dailySteps.text = "Daily steps: $total"
 
-
+                totalD = total
+                sl.text =  totalD.toString()
             }
+
             .addOnFailureListener { e ->
                 Log.w(TAG, "There was a problem getting the step count.", e)
             }
+        return totalD
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the main; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        if (id == R.id.action_read_data) {
-            fitSignIn(FitActionRequestCode.READ_DATA)
-            return true
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    /** Initializes a custom log class that outputs both to in-app targets and logcat.  */
-    /*private fun initializeLogging() {
-        // Wraps Android's native log framework.
-        val logWrapper = LogWrapper()
-        // Using Log, front-end to the logging chain, emulates android.util.log method signatures.
-        Log.setLogNode(logWrapper)
-        // Filter strips out everything except the message text.
-        val msgFilter = MessageOnlyLogFilter()
-        logWrapper.next = msgFilter
-        // On screen logging via a customized TextView.
-        val logView = findViewById<View>(R.id.sample_logview) as LogView
-        TextViewCompat.setTextAppearance(logView, R.style.Log)
-        logView.setBackgroundColor(Color.WHITE)
-        msgFilter.next = logView
-        Log.i(TAG, "Ready")
-    }*/
 
     private fun permissionApproved(): Boolean {
         val approved = if (runningQOrLater) {
